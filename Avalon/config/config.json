@@ -1,0 +1,23 @@
+{
+	"port": 3000,
+	"mongoose": {
+		"uri": "mongodb://localhost/avalon5",
+		"options": {
+			"server": {
+				"socketOptions": {
+					"keepAlive": 1
+				}
+			}
+		}
+	},
+	"session": {
+		"secret": "megaSecr",
+		"key": "sid",
+		"cookie": {
+			"path": "/",
+			"httpOnly": true,
+			"maxAge": 3600
+		},
+		"liveAge": 1209600000
+	}
+}
