@@ -4,7 +4,10 @@
   "description": "test task in avalon company",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.16.1",
     "express": "^4.13.4",
+    "mongoose": "^4.8.4",
+    "mongoose-auto-increment": "^5.0.1",
     "nconf": "^0.8.4"
   },
   "devDependencies": {},
