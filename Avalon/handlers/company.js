@@ -218,44 +218,44 @@ var updateCompany = function(req, res, next) {
 						try {
 							async.each(
 								newCompanyGoods, 
-								function(itemName) {
-								Product.findOne({itemName: itemName}, function(err, product) {
-									if (err) {
-										throw next(err);
-									}
-									
-									if (!product) {
-										Product.findOne({itemName: itemName}, function(err, product) {
-											if (err) {
-												throw next(err);
-											}
-										});
-
-										product = new Product({
-											itemName: itemName,
-											providerCompany: [newCompanyName]
-										});
+								function(itemName, callback) {
+									Product.findOne({itemName: itemName}, function(err, product) {
+										if (err) {
+											throw next(err);
+										}
 										
-										product.save(function(err, product, affected) {
-											if (err) {
-												throw next(err);
-											}
-										});
-									} else {
-										Product.findOneAndUpdate({itemName: itemName}, {$push: {providerCompany: newCompanyName} }, {upsert: false}, function(err, product) {
-											if (err) {
-												throw next(err);
-											}
+										if (!product) {
+											Product.findOne({itemName: itemName}, function(err, product) {
+												if (err) {
+													throw next(err);
+												}
+											});
 
-											if (counter >= companyGoodsLength) {
-												callback();
-											}
-										});
-									}
+											product = new Product({
+												itemName: itemName,
+												providerCompany: [newCompanyName]
+											});
+											
+											product.save(function(err, product, affected) {
+												if (err) {
+													throw next(err);
+												}
+											});
+										} else {
+											Product.findOneAndUpdate({itemName: itemName}, {$push: {providerCompany: newCompanyName} }, {upsert: false}, function(err, product) {
+												if (err) {
+													throw next(err);
+												}
 
-									counter++;
+												if (counter >= companyGoodsLength) {
+													callback();
+												}
+											});
+										}
 
-								});
+										counter++;
+
+									});
 								}
 							);
 						} catch(e) {
